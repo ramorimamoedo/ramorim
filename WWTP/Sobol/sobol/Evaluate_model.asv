@@ -1,0 +1,88 @@
+function  y = Evaluate_model(x) 
+%prepare lua ET files accordingly 
+%%Addition foreasyGSA
+price_el = x(1,1); 
+price_gas =x(1,2); 
+COP_heatpump = x(1,3); 
+resources = textread('C:\osmose_julia\ET\pulp\resources.lua','%s','delimiter','\n');	% tested with matlab
+utilities = textread('C:\osmose_julia\ET\pulp\generic_utilities.lua','%s','delimiter','\n');	% tested with matlab
+htg = textread('C:\osmose_julia\ET\pulp\htg_exp_sel_noh2.lua','%s','delimiter','\n');	% tested with matlab
+
+
+for i=1:length(resources)
+    if  contains(resources(i), 'model.inputs.price_el   = {default') ==1 
+        update = {'model.inputs.price_el   = {default = ',num2str(price_el),' , unit = ''USD/kWh'', description = ''''}'} ; 
+        resources(i)= join(update);
+    end 
+end 
+
+
+for j=1:length(utilities)
+    if  contains(utilities(j), 'COP_heatpump = {default = ') ==1 
+        update = {'COP_heatpump = {default = ',num2str(COP_heatpump), ',min=0, max=100000, unit = ''''},'} ; 
+        utilities(j)= join(update);
+    end 
+end 
+
+
+for j=1:length(htg)
+    if  contains(htg(j), 'price_gas   = {default') ==1 
+        update = {'price_gas   = {default  =', num2str(price_gas), ',unit = ''USD/kgh'', description = ''''},'} ; 
+        htg(j)= join(update);
+    end 
+end 
+
+
+fileRes = fopen('C:\osmose_julia\ET\pulp\resources.lua','w');
+fprintf(fileRes,'%s\n',resources{:});
+fclose(fileRes);
+
+
+
+fileUt = fopen('C:\osmose_julia\ET\pulp\generic_utilities.lua','w');
+fprintf(fileRes,'%s\n',utilities{:});
+fclose(fileRes);
+
+
+
+
+fileRes = fopen('C:\osmose_julia\ET\pulp\htg_exp_sel_noh2.lua','w');
+fprintf(fileRes,'%s\n',htg{:});
+fclose(fileRes);
+
+filename= strcat('C:\osmose_julia\ET\pulp\Sobol\sobol\output\',num2str(price_el),'_',num2str(price_gas),'_',num2str(COP_heatpump),'.txt'); 
+filename_old = ('C:\osmose_julia\ET\pulp\Sobol\sobol\Sobol_results_old.txt'); 
+ 
+if not(isfile(filename))
+       
+[status,result] = system('cd "C:\osmose_julia" && lua projects\pulp\water_frontend.lua');
+
+%added for easyGSA (not so easy in the end) 
+
+     
+     %y1(i,1) = data(1); 
+    % y2A(i,1) = data(2); 
+     %y3A(i,1)  = data(3); 
+     
+movefile ('C:\osmose_julia\ET\pulp\Sobol\sobol\Sobol_results.txt', filename); 
+%fid= fopen('C:\osmose_julia\ET\pulp\Sobol\sobol\Sobol_results.txt', 'w'); 
+%fclose('all');
+ end
+if not(isfile(filename))
+   file= fopen(filename_old, 'r');
+     tline = fgetl(file);
+     y_old = sscanf(tline,'%f');
+     fclose('all');
+     y= y_old; 
+else 
+   file= fopen(filename, 'r');
+     tline = fgetl(file);
+     data = sscanf(tline,'%f, %f, %f');
+     fclose('all');
+     y= data(2);   
+     y_old = y ;
+end
+    
+   file= fopen(filename_old, 'w');
+     fwrite 
+end 
