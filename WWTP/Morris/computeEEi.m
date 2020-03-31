@@ -3,26 +3,22 @@
 %% this method requires scalar outputs, y:
 % in my version, I have this already because it
 
-
-
-
-
 %% compile an model output matrix
-%{
+
 Sim = [y1 y2 y3];
-Sim = Sim{:,:}
+%Sim = Sim{:,:}
 [n k] = size(X) ;
 n = n / (k+1);
 [mm ll] = size(Sim) ;
 
-%% below info needed for sigma-scaling of EEi
+% below info needed for sigma-scaling of EEi
 sig_y = std(Sim);
 sig_x = std(Xval);
 
 var = {'Elec','Gas','Cost'} ;
 
-%% read in the Morris simulations, detect which parameter changed and
-%% compute the corresponding EEi
+% read in the Morris simulations, detect which parameter changed and
+% compute the corresponding EEi
 
 [n k] = size(X) ;
 n = n / (k+1);
@@ -47,7 +43,7 @@ for i=1:n
     end
 end
 
-%% Calculate mean and std from Fi = EEi
+% Calculate mean and std from Fi = EEi
 for l=1:ll
     if l==1;
         Fi = EEs ;
@@ -63,8 +59,8 @@ end
 fl =strcat('ComputedEEi_r',num2str(r),'_p',num2str(p),'.mat');
 save(fl,'EEs','EEo','EEb','mu','sig')
 
-% close all
-%}
+close all
+
 figure
 for i=1:3
     subplot(1,3,i)

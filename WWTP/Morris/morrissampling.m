@@ -10,8 +10,8 @@
 
 %% Parameters range
 
-pmor=[78,26,0.2]; % get the reference parameter values /we assume we dont have any data for PE. otherwise we dont use Monte Carlo
-lp = {'price_{el}', 'price_{gas}', 'Initial_{cool}'};
+pmor=[78,26,0.25]; % get the reference parameter values /we assume we dont have any data for PE. otherwise we dont use Monte Carlo
+lp = {'price_{el}', 'price_{gas}', 'Initial_{solids}'};
 
 
 inputunc=[0.5 0.5 0.25]; % expert input uncertainty indicates degree of uncertainty [0: Low , 1: High]

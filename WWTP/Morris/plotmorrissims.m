@@ -8,9 +8,9 @@ fs=12;
 
 t =[1;2;3;4;5;6;7;8;9;10;11;12];
 
-values1= y1.Var1; 
-values2= y2.Var2; 
-values3= y3.Var3; 
+values1= y1; 
+values2= y2; 
+values3= y3; 
 figure(1) % Create a new figure window
 subplot(1,3,1);
 plot(values1);
