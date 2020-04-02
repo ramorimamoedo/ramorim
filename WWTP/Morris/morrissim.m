@@ -82,15 +82,13 @@ end
 
 %% Read results 
 
-%fid = readtable('C:\osmose_julia\ET\pulp\Morris\Morris_results.txt');
-
 % now all the results should be written in a text file 
-%next step: open text file and read all values , separate them by komma 
+%next step: open text file and read all values.
 % assign y1 , y2, y3 
 
 
 %% record the outputs
-% y1 elec out y2 sng out y3 cost cooling 
+% y1 unit_cost y2 unit_energy y3 unit_impact 
 y1 = export(:, 1); 
 y2 = export(:, 2); 
 y3 = export(:, 3); 
