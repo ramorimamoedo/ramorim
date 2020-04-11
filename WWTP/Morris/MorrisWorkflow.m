@@ -2,8 +2,8 @@
 %% global script executing the workflow in Morris method
 %% Gurkan Sin DTU Chemical Engineeirng
 %% June 24, 2015 DTU Lyngby
-close all
-clear
+close all;
+clear all;
 clc
 
 %%Step 1: perform Morris sampling
