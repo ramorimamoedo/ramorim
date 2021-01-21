@@ -29,6 +29,8 @@ for i=1:n
     for j=1:k
         m1 = (k+1)*(i-1);
         r1 = m1 + j ;
+        z = X(r1,:) - X(r1+1,:);
+        disp(r1);
         ix = find (X(r1,:) - X(r1+1,:)) ; % find the non-zero value
         if length(ix) > 1
             warning('there is more than one factor changed')
@@ -46,11 +48,11 @@ end
 % Calculate mean and std from Fi = EEi
 for l=1:ll
     if l==1;
-        Fi = EEs ;
+        Fi = abs(EEs);
     elseif l == 2
-        Fi = EEo ;
-    else 
-        Fi = EEb ;
+        Fi = abs(EEo);
+     else 
+         Fi = abs(EEb) ;
     end
     mu(:,l)  = mean(Fi);
     sig(:,l) = std(Fi);
@@ -88,20 +90,20 @@ for i=1:3
     xlabel('mean, \mu_i')
     ylabel('standard deviation, \sigma_i')
 end
-%{
-f = 1;
-if f == 1;
+
+
     for l=1:ll
         if l==1
-            Fi = EEs ;
+            figure
+            Fi = abs(EEs) ;
         elseif l == 2
-            Fi = EEo ;
+            figure
+            Fi = abs(EEo) ;
         elseif l == 3
-            Fi = EEb ;
-        else 
-            Fi = EEour ;
+            figure
+            Fi = abs(EEb) ;
         end
-        figure
+ 
         subplot(3,1,1)
         hist(Fi(:,1))
         xlabel(['EEi of ',lp{1}])
@@ -116,6 +118,4 @@ if f == 1;
         xlabel(['EEi of ',lp{3}])
         ylabel('Frequency')
     end
-%}
-%end
 

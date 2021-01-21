@@ -71,7 +71,7 @@ fclose(fileRes);
 
 
  
-[status,result] = system('cd "C:\osmose-projects\personal" && lua projects\HTL\HTL_frontend.lua');
+[status,result] = system('cd "C:\osmose-projects\personal" && lua projects\HTL\HTL_frontend_Matlab.lua');
 [status,out] = system('cd "C:\osmose-projects\personal" && ampl_lic stop');
 file = csvread('C:\osmose-projects\personal\results\WWTP_MATLAB\run_000_testing\results_matlab.csv')
 export(k,:) = file
